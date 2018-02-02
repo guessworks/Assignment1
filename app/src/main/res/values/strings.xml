@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">SubBook</string>
+    <string name="NameFieldHint">Name</string>
+    <string name="DateFieldHint">yyyy-mm-dd</string>
+    <string name="ChargeFieldHint">0.00</string>
+    <string name="CommentFieldHint">Comment (optional)</string>
+    <string name="NameTextView">Name (20 characters max.)</string>
+    <string name="DateTextView">Date Started</string>
+    <string name="ChargeTextView">Monthly Charge</string>
+    <string name="CommentTextView">Comment (30 characters max.)</string>
+    <string name="AddButton">Add</string>
+    <string name="NewSubButton">New Subscription</string>
+    <string name="ViewEditButton">view/edit</string>
+    <string name="NewSubTitle">New Subscription</string>
+    <string name="MainPageTitle">Subscriptions</string>
+</resources>
