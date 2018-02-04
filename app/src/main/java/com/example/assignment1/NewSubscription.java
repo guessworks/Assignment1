@@ -40,7 +40,7 @@ public class NewSubscription extends AppCompatActivity {
     /**
      * On creation of the activity, it displays the layout.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState The activity's previous saved state.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +62,6 @@ public class NewSubscription extends AppCompatActivity {
             this.checkInput();
             //no errors, continue
             sub = new Subscription(charge, date, name, comment);
-            Intent returnData = new Intent();
-            returnData.putExtra("newSub", sub);
-            setResult(RESULT_OK, returnData);
             finish();
         }
         catch(NegativeChargeException ex){
@@ -110,5 +107,17 @@ public class NewSubscription extends AppCompatActivity {
         if (comment.length() == 0){
             comment = "";
         }
+    }
+
+    /**
+     * When the activity finishes, it creates a new Subscription object
+     * and places it in an intent to be returned to the SubBook activity.
+     */
+    @Override
+    public void finish() {
+        Intent returnData = new Intent();
+        returnData.putExtra("newSub", sub);
+        setResult(RESULT_OK, returnData);
+        super.finish();
     }
 }

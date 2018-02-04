@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,13 +44,12 @@ public class SubListAdapter extends ArrayAdapter {
 
     /**
      * Constructs a SubListAdapter object.
-     *
-     * @param context The activity using SubListAdapter.
+     *  @param context The activity using SubListAdapter.
      * @param subList The list of subscriptions.
      */
-    public SubListAdapter(Activity context, SubList subList){
+    public SubListAdapter(Activity context, ArrayList<Subscription> subListArray, SubList subList){
 
-        super(context,R.layout.listview_row , (List) subList);
+        super(context,R.layout.listview_row , subListArray);
         this.subList = subList;
 
     }
@@ -62,6 +62,7 @@ public class SubListAdapter extends ArrayAdapter {
      * @param parent
      * @return A rowView object (data to populate one row).
      */
+    @Override
     public View getView(int position, View view, ViewGroup parent){
         LayoutInflater inflater=context.getLayoutInflater();
         View rowView=inflater.inflate(R.layout.listview_row, null,true);

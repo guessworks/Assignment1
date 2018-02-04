@@ -13,6 +13,7 @@ package com.example.assignment1;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -44,12 +45,13 @@ public class SubList {
         subListObj.add(newSubscription);
     }
 
+    /*
     /**
      * Returns the index of a Subscription if it is contained in SubList.
      *
      * @param targetName The Subscription name of the Subscription to be found.
      * @return The subscription's index, or -1 if it is not found.
-     */
+     *
     public int searchForSub( String targetName ) {
         int index;
         boolean found = false;
@@ -67,6 +69,8 @@ public class SubList {
             return -1;
         }
     }
+
+    */
 
     /**
      * Returns a subscription's name based on its index within the SubList.
@@ -132,4 +136,12 @@ public class SubList {
     public void deleteSub(int index) {
         subListObj.remove(index);
     }
+
+    /**
+    * Returns the subList ArrayList object for use by SubListAdapter.
+    */
+    public ArrayList<Subscription> getList() {
+        return subListObj;
+    }
+
 }
