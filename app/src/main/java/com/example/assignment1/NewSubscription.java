@@ -62,23 +62,16 @@ public class NewSubscription extends AppCompatActivity {
                     finish();
                 }
                 catch(NegativeChargeException ex){
-                    Toast.makeText(getApplicationContext(), "Monthly Charge can't be negative", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Monthly Charge can't be negative", Toast.LENGTH_LONG).show();
                 }
                 catch(EmptyFieldException ex){
-                    Toast.makeText(getApplicationContext(), "Name, Date, and Monthly charge cannot be left blank.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Name, Date, and Monthly charge cannot be left blank.", Toast.LENGTH_LONG).show();
                 }
             }
         };
         Button addSubButton = (Button) findViewById(R.id.button);
         addSubButton.setOnClickListener(addSubListener);
     }
-
-    /**
-     * Called when the "add" button is clicked. Interprets the user entered
-     * text and sends it back to MainActivity.
-     *
-     * @param view
-     */
 
 
     /**

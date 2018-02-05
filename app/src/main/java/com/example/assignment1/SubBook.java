@@ -203,26 +203,25 @@ public class SubBook extends AppCompatActivity {
             }
         } else if (resultCode == RESULT_OK && requestCode == 4) {
             /* Result actions for the ViewSubscription sub-activity */
-            if (data != null) {
-                if (data.getExtras() != null) {
+            if (data.getExtras() != null) {
 
-                    if (data.getExtras().getInt("delete") == 1) {
-                        /* delete subscription */
-                        int index = data.getExtras().getInt("position");
-                        subList.deleteSub(index);
-                        subListAdapter.notifyDataSetChanged();
-                        saveInFile();
+                if (data.getExtras().getInt("delete") == 1) {
+                    /* delete subscription */
+                    int index = data.getExtras().getInt("position");
+                    subList.deleteSub(index);
+                    subListAdapter.notifyDataSetChanged();
+                    saveInFile();
 
-                    } else if (data.getExtras().get("editedSub") != null) {
-                        /* update subscription */
-                        int index = data.getExtras().getInt("position");
-                        Subscription editedSub = (Subscription) data.getExtras().get("editedSub");
-                        subList.editSub(index, editedSub);
-                        subListAdapter.notifyDataSetChanged();
-                        saveInFile();
+                } else if (data.getExtras().get("editedSub") != null) {
+                    /* update subscription */
+                    int index = data.getExtras().getInt("position");
+                    Subscription editedSub = (Subscription) data.getExtras().get("editedSub");
+                    subList.editSub(index, editedSub);
+                    subListAdapter.notifyDataSetChanged();
+                    saveInFile();
                     }
                 }
-            }
+
         }
     }
 }

@@ -31,7 +31,7 @@ import android.widget.TextView;
  */
 public class ViewSubscription extends AppCompatActivity {
 
-    private int delete = 0;
+    private int delete;
     private Context context = this;
     private Intent editedSub;
     private Subscription sub;
@@ -109,7 +109,7 @@ public class ViewSubscription extends AppCompatActivity {
             setResult(RESULT_OK, returnData);
             super.finish();
         }
-        else if (delete == 0){
+        else{
             /* User edited the subscription */
             Intent returnData = new Intent();
             returnData.putExtra("delete", 0);
@@ -131,6 +131,7 @@ public class ViewSubscription extends AppCompatActivity {
         if ((requestCode == 6) && (resultCode == RESULT_OK)){
             if (data.getExtras() != null) {
                 sub = (Subscription) data.getExtras().get("editSub");
+                delete = 0;
             }
         }
         else {}
