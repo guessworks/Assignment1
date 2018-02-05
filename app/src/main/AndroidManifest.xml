@@ -30,7 +30,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SubBook" />
         </activity>
-        <activity android:name=".EditSubscription"></activity>
+        <activity android:name=".EditSubscription" android:parentActivityName=".SubBook">
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".SubBook" /></activity>
     </application>
 
 </manifest>

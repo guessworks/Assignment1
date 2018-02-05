@@ -36,10 +36,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * Is the main activity from which the app is run.
+ * Is the main activity from which the app is run. Manages the list of subscriptions
+ * through instances of the SubList and SubListAdapter classes. Can begin
+ * ViewSubscription and NewSubscription sub-activities.
  *
  * @author Lauren H.-L.
  * @see NewSubscription
+ * @see SubList
+ * @see SubListAdapter
+ * @see ViewSubscription
  */
 public class SubBook extends AppCompatActivity {
 
@@ -115,6 +120,7 @@ public class SubBook extends AppCompatActivity {
         super.onStart();
         loadFromFile();
 
+        /* Creates a new SubListAdapter and pairs it with the ListView */
         subListAdapter = new SubListAdapter(this, subList.getList(), subList);
         listView.setAdapter(subListAdapter);
     }
@@ -179,29 +185,34 @@ public class SubBook extends AppCompatActivity {
     /**
      * Processes the data sent by the completed NewSubscription activity.
      *
-     * @param requestCode An int value which represents the subactivity.
+     * @param requestCode An int value which represents the sub-activity.
      * @param resultCode  An int value that depends on the termination status of
-     *                    the subactivity.
-     * @param data        An intent object containing data passed from the subactivity.
+     *                    the sub-activity.
+     * @param data        An intent object containing data passed from the sub-activity.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == 5) {
+            /* Result actions for the NewSubscription sub-activity */
             if (data.getExtras() != null) {
+                /* Add the new subscription to the list, update the ListView, and save */
                 Subscription newSubscription = (Subscription) data.getExtras().get("newSub");
                 subList.newSub(newSubscription);
                 subListAdapter.notifyDataSetChanged();
                 saveInFile();
             }
         } else if (resultCode == RESULT_OK && requestCode == 4) {
+            /* Result actions for the ViewSubscription sub-activity */
             if (data != null) {
                 if (data.getExtras() != null) {
-                    /* delete subscription */
+
                     if (data.getExtras().getInt("delete") == 1) {
+                        /* delete subscription */
                         int index = data.getExtras().getInt("position");
                         subList.deleteSub(index);
                         subListAdapter.notifyDataSetChanged();
                         saveInFile();
+
                     } else if (data.getExtras().get("editedSub") != null) {
                         /* update subscription */
                         int index = data.getExtras().getInt("position");
@@ -210,7 +221,6 @@ public class SubBook extends AppCompatActivity {
                         subListAdapter.notifyDataSetChanged();
                         saveInFile();
                     }
-                } else {
                 }
             }
         }

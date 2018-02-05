@@ -20,8 +20,6 @@ import java.util.Date;
  *
  * @author Lauren H.L.
  * @see SubList
- * @see SubListAdapter
- * @see NewSubscription
  */
 public class Subscription implements Serializable {
 

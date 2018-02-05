@@ -78,6 +78,7 @@ public class ViewSubscription extends AppCompatActivity {
                 Intent editSub = new Intent(context , EditSubscription.class);
                 startActivityForResult(editSub, 6);
                 onActivityResult(6, RESULT_OK, editSub);
+                finish();
             }
         };
         Button editButton = (Button) findViewById(R.id.editSubButton);
@@ -100,22 +101,20 @@ public class ViewSubscription extends AppCompatActivity {
      */
     @Override
     public void finish() {
-        if (delete == 0){
-            /* User edited the subscription */
-            if (sub != null) {
-                Intent returnData = new Intent();
-                returnData.putExtra("delete", 0);
-                returnData.putExtra("position", position);
-                returnData.putExtra("editedSub", sub);
-                setResult(RESULT_OK, returnData);
-            }
-            super.finish();
-        }
-        else {
+        if (delete == 1){
             /* User is deleting the subscription */
             Intent returnData = new Intent();
             returnData.putExtra("delete", 1);
             returnData.putExtra("position", position);
+            setResult(RESULT_OK, returnData);
+            super.finish();
+        }
+        else if (delete == 0){
+            /* User edited the subscription */
+            Intent returnData = new Intent();
+            returnData.putExtra("delete", 0);
+            returnData.putExtra("position", position);
+            returnData.putExtra("editedSub", sub);
             setResult(RESULT_OK, returnData);
             super.finish();
         }
@@ -132,15 +131,6 @@ public class ViewSubscription extends AppCompatActivity {
         if ((requestCode == 6) && (resultCode == RESULT_OK)){
             if (data.getExtras() != null) {
                 sub = (Subscription) data.getExtras().get("editSub");
-                /* Update the values displayed in TextView */
-                subName.clearComposingText();
-                subName.setText(sub.getName());
-                subDate.clearComposingText();
-                subDate.setText(sub.getDate());
-                subCharge.clearComposingText();
-                subCharge.setText(sub.getCharge().toString());
-                subComment.clearComposingText();
-                subComment.setText(sub.getComment());
             }
         }
         else {}

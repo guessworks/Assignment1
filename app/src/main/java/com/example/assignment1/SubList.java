@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Has an ArrayList object containing all Subscription objects.
+ * Has an ArrayList object containing all Subscription objects, as well as
+ * methods for adding, deleting, and editing subscriptions.
  *
  * @author Lauren H.-L.
  * @see Subscription
  * @see SubListAdapter
- * @see NewSubscription
  * @see SubBook
  */
 public class SubList {
@@ -45,32 +45,6 @@ public class SubList {
         subListObj.add(newSubscription);
     }
 
-    /*
-    /**
-     * Returns the index of a Subscription if it is contained in SubList.
-     *
-     * @param targetName The Subscription name of the Subscription to be found.
-     * @return The subscription's index, or -1 if it is not found.
-     *
-    public int searchForSub( String targetName ) {
-        int index;
-        boolean found = false;
-
-        for (index = 0; index < subListObj.size(); index++) {
-            if (Objects.equals(subListObj.get(index).getName(), targetName)) {
-                found = true;
-                break;
-            }
-        }
-        if (Objects.equals(found, true)) {
-            return index;
-        }
-        else {
-            return -1;
-        }
-    }
-
-    */
 
     /**
      * Returns a subscription's name based on its index within the SubList.
