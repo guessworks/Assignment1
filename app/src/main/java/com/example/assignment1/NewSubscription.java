@@ -52,12 +52,10 @@ public class NewSubscription extends AppCompatActivity {
 
         View.OnClickListener addSubListener = new View.OnClickListener() {
             public void onClick(View view){
-                int error;
 
                 getInput();
                 try {
                     checkInput();
-                    //no errors, continue
                     sub = new Subscription(charge, date, name, comment);
                     finish();
                 }

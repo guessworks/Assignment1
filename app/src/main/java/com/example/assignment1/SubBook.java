@@ -49,8 +49,8 @@ import com.google.gson.reflect.TypeToken;
 public class SubBook extends AppCompatActivity {
 
     public SubList subList = new SubList();
-    ListView listView;
-    SubListAdapter subListAdapter;
+    private ListView listView;
+    private SubListAdapter subListAdapter;
     private Context context = this;
     private static final String FILENAME = "saveData.sav";
 

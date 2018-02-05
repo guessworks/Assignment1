@@ -33,13 +33,12 @@ public class ViewSubscription extends AppCompatActivity {
 
     private int delete;
     private Context context = this;
-    private Intent editedSub;
     private Subscription sub;
     private int position;
-    TextView subName;
-    TextView subDate;
-    TextView subCharge;
-    TextView subComment;
+    private TextView subName;
+    private TextView subDate;
+    private TextView subCharge;
+    private TextView subComment;
 
     /**
      * Called upon creation of the activity. Displays the subscription data
@@ -77,8 +76,7 @@ public class ViewSubscription extends AppCompatActivity {
             public void onClick(View view) {
                 Intent editSub = new Intent(context , EditSubscription.class);
                 startActivityForResult(editSub, 6);
-                onActivityResult(6, RESULT_OK, editSub);
-                finish();
+                onActivityResult(RESULT_OK, 6, editSub);
             }
         };
         Button editButton = (Button) findViewById(R.id.editSubButton);
@@ -127,13 +125,13 @@ public class ViewSubscription extends AppCompatActivity {
      * @param requestCode An integer which identifies the sub-activity being terminated.
      * @param data The sub-activity's return data.
      */
-    public void onActivityResult(int resultCode, int requestCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if ((requestCode == 6) && (resultCode == RESULT_OK)){
             if (data.getExtras() != null) {
                 sub = (Subscription) data.getExtras().get("editSub");
                 delete = 0;
             }
         }
-        else {}
+        finish();
     }
 }
