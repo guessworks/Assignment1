@@ -88,7 +88,7 @@ public class SubList {
      * @param index The subscription's position in SubList.
      * @return The subscription's start date.
      */
-    public Date getSubDate(int index){
+    public String getSubDate(int index){
         return subListObj.get(index).getDate();
     }
 
@@ -121,7 +121,7 @@ public class SubList {
      * @param name The subscription's new name.
      * @param comment The subscription's new comment.
      */
-    public void editSub(int index, Double charge, Date date, String name, String comment){
+    public void editSub(int index, Double charge, String date, String name, String comment){
         subListObj.get(index).setCharge(charge);
         subListObj.get(index).setDate(date);
         subListObj.get(index).setName(name);

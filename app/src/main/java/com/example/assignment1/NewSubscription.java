@@ -12,17 +12,19 @@
 
 package com.example.assignment1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Date;
 
 /**
- * A subactivity which allows the user to enter a new subscription.
+ * A sub-activity which allows the user to enter a new subscription.
  *
  * @author Lauren H.-L.
  * @see Subscription
@@ -32,10 +34,11 @@ import java.util.Date;
 public class NewSubscription extends AppCompatActivity {
 
     private String name;
-    private Date date;
+    private String date;
     private Double charge;
     private String comment;
     private Subscription sub;
+    private Context context= this;
 
     /**
      * On creation of the activity, it displays the layout.
@@ -46,6 +49,34 @@ public class NewSubscription extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_subscription);
+
+        View.OnClickListener addSubListener = new View.OnClickListener() {
+            public void onClick(View view){
+                int error;
+
+                getInput();
+                try {
+                    checkInput();
+                    //no errors, continue
+                    sub = new Subscription(charge, date, name, comment);
+                    finish();
+                }
+                catch(NegativeChargeException ex){
+                    //shows a message
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.makeText(getApplicationContext(), "Monthly Charge can't be negative", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                catch(EmptyFieldException ex){
+                    //implement
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.makeText(getApplicationContext(), "Name, Date, and Monthly charge cannot be left blank.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        };
+        Button addSubButton = (Button) findViewById(R.id.button);
+        addSubButton.setOnClickListener(addSubListener);
     }
 
     /**
@@ -54,27 +85,7 @@ public class NewSubscription extends AppCompatActivity {
      *
      * @param view
      */
-    public void onClickNS(View view){
-        int error;
 
-        this.getInput();
-        try {
-            this.checkInput();
-            //no errors, continue
-            sub = new Subscription(charge, date, name, comment);
-            finish();
-        }
-        catch(NegativeChargeException ex){
-            //shows a message
-            Toast toast = new Toast(getApplicationContext());
-            toast.makeText(getApplicationContext(), "Monthly Charge can't be negative", Toast.LENGTH_SHORT);
-        }
-        catch(EmptyFieldException ex){
-            //implement
-            Toast toast = new Toast(getApplicationContext());
-            toast.makeText(getApplicationContext(), "Name, Date, and Monthly charge cannot be left blank.", Toast.LENGTH_SHORT);
-        }
-    }
 
     /**
      * Gets the user entered text from the view objects and places it in variables.
@@ -83,7 +94,7 @@ public class NewSubscription extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.NameField);
         name = editText.getText().toString();
         EditText editText2 = (EditText) findViewById(R.id.DateField);
-        date = (Date) editText2.getText();
+        date = editText2.getText().toString();
         EditText editText3 = (EditText) findViewById(R.id.MonthlyCharge);
         String temp = editText3.getText().toString();
         charge = Double.parseDouble(temp);

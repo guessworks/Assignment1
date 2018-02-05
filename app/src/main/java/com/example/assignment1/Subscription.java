@@ -26,7 +26,7 @@ import java.util.Date;
 public class Subscription implements Serializable {
 
     private Double monthlyCharge;
-    private Date dateStarted;
+    private String dateStarted;
     private String subName;
     private String comment;
 
@@ -38,7 +38,7 @@ public class Subscription implements Serializable {
      * @param name The subscription's name.
      * @param comment An optional user comment.
      */
-    public Subscription( Double charge, Date date, String name, String comment){
+    public Subscription( Double charge, String date, String name, String comment){
         this.monthlyCharge = charge;
         this.dateStarted = date;
         this.subName = name;
@@ -52,7 +52,7 @@ public class Subscription implements Serializable {
      * @param date The subscription's start date.
      * @param name The subscription's name.
      */
-    public Subscription( Double charge, Date date, String name){
+    public Subscription( Double charge, String date, String name){
         //no comment has been supplied, so it is set to blank
         this.monthlyCharge = charge;
         this.dateStarted = date;
@@ -63,7 +63,7 @@ public class Subscription implements Serializable {
      * A default constructor for Subscription; should never be called.
      */
     private Subscription(){
-        this( 0.0, new Date(), "Default", "");
+        this( 0.0, new Date().toString(), "Default", "");
     }
 
     /**
@@ -79,7 +79,7 @@ public class Subscription implements Serializable {
      *
      * @return Date started.
      */
-    public Date getDate() {
+    public String getDate() {
         return this.dateStarted;
     }
 
@@ -116,7 +116,7 @@ public class Subscription implements Serializable {
      *
      * @param date Date started.
      */
-    public void setDate( Date date ) {
+    public void setDate( String date ) {
         this.dateStarted = date;
     }
 

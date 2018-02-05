@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -72,6 +73,32 @@ public class SubBook extends AppCompatActivity {
                 onActivityResult(5, RESULT_OK, newSub);
             }
         };
+
+        /*
+         * Called when a row in the listView is clicked. Sends the data from the
+         * subscription to the ViewSubscription sub-activity.
+         * This excerpt of code adapted from Andy O'Sullivan, April 12 2017
+         * https://appsandbiscuits.com/listview-tutorial-android-12-ccef4ead27cc
+         */
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Intent viewSub = new Intent(SubBook.this, ViewSubscription.class);
+                int index = position;
+                viewSub.putExtra("position", index);
+                String name = subList.getSubName(position);
+                viewSub.putExtra("name", name);
+                String date = subList.getSubDate(position);
+                viewSub.putExtra("date", date);
+                String charge = subList.getSubCharge(position).toString();
+                viewSub.putExtra("charge", charge);
+                String comment = subList.getSubComment(position);
+                viewSub.putExtra("comment", comment);
+                startActivityForResult(viewSub, 4);
+                onActivityResult(4, RESULT_OK, viewSub);
+            }
+        });
 
         /* Captures buttons from layout */
         Button newSubButton = (Button) findViewById(R.id.button2);
@@ -159,12 +186,21 @@ public class SubBook extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == 5) {
-            if (data.getExtras().get("newSub") != null) {
+            if (data.getExtras() != null) {
                 Subscription newSubscription = (Subscription) data.getExtras().get("newSub");
                 subList.newSub(newSubscription);
                 subListAdapter.notifyDataSetChanged();
                 saveInFile();
             }
         }
+        else if (resultCode == RESULT_OK && requestCode == 4) {
+            if (data.getExtras() != null) {
+                    int index = data.getExtras().getInt("position");
+                    subList.deleteSub(index);
+                    subListAdapter.notifyDataSetChanged();
+                    saveInFile();
+                }
+            }
+        }
     }
-}
+

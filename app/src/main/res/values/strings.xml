@@ -13,4 +13,8 @@
     <string name="ViewEditButton">view/edit</string>
     <string name="NewSubTitle">New Subscription</string>
     <string name="MainPageTitle">Subscriptions</string>
+    <string name="EditSubButton">Edit</string>
+    <string name="DeleteSubButton">Delete</string>
+    <string name="MonthlyCharge">Monthly charge:</string>
+    <string name="Date">Date started:</string>
 </resources>

@@ -51,6 +51,7 @@ public class SubListAdapter extends ArrayAdapter {
 
         super(context,R.layout.listview_row , subListArray);
         this.subList = subList;
+        this.context = context;
 
     }
 
@@ -75,8 +76,8 @@ public class SubListAdapter extends ArrayAdapter {
 
         /* Sets the TextView objects' values to those in the subscription. */
         SubName.setText(subList.getSubName(position));
-        SubDate.setText(subList.getSubDate(position).toString());
-        SubCharge.setText(subList.getSubDate(position).toString());
+        SubDate.setText(subList.getSubDate(position));
+        SubCharge.setText(subList.getSubCharge(position).toString());
         SubComment.setText(subList.getSubComment(position));
 
         return rowView;
