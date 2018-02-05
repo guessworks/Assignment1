@@ -62,16 +62,10 @@ public class NewSubscription extends AppCompatActivity {
                     finish();
                 }
                 catch(NegativeChargeException ex){
-                    //shows a message
-                    Toast toast = new Toast(getApplicationContext());
-                    toast.makeText(getApplicationContext(), "Monthly Charge can't be negative", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Toast.makeText(getApplicationContext(), "Monthly Charge can't be negative", Toast.LENGTH_SHORT).show();
                 }
                 catch(EmptyFieldException ex){
-                    //implement
-                    Toast toast = new Toast(getApplicationContext());
-                    toast.makeText(getApplicationContext(), "Name, Date, and Monthly charge cannot be left blank.", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Toast.makeText(getApplicationContext(), "Name, Date, and Monthly charge cannot be left blank.", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -97,7 +91,9 @@ public class NewSubscription extends AppCompatActivity {
         date = editText2.getText().toString();
         EditText editText3 = (EditText) findViewById(R.id.MonthlyCharge);
         String temp = editText3.getText().toString();
-        charge = Double.parseDouble(temp);
+        if (!(temp.isEmpty())) {
+            charge = Double.parseDouble(temp);
+        }
         EditText editText5 = (EditText) findViewById(R.id.CommentField);
         comment = editText5.getText().toString();
     }
@@ -109,14 +105,14 @@ public class NewSubscription extends AppCompatActivity {
      * @throws EmptyFieldException Thrown if an essential field is empty.
      */
     public void checkInput() throws NegativeChargeException, EmptyFieldException {
-        if (charge < 0) {
+        if ((charge != null) && (charge < 0)) {
             throw new NegativeChargeException();
         }
-        if ((name.length() == 0) || (charge == 0.00) || (date == null)){
+        if ((name == null) || (charge == null) || (date == null)){
             throw new EmptyFieldException();
         }
-        if (comment.length() == 0){
-            comment = "";
+        if (comment == null){
+            comment = " ";
         }
     }
 

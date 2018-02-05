@@ -88,7 +88,6 @@ public class ViewSubscription extends AppCompatActivity {
 
     @Override
     public void finish() {
-        setResult(RESULT_OK);
         if (!delete){
             //implement editing exit
             super.finish();
@@ -97,6 +96,7 @@ public class ViewSubscription extends AppCompatActivity {
             /* User is deleting the subscription */
             Intent returnData = new Intent();
             returnData.putExtra("delete", true);
+            setResult(RESULT_OK, returnData);
             super.finish();
         }
     }

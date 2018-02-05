@@ -194,12 +194,13 @@ public class SubBook extends AppCompatActivity {
             }
         }
         else if (resultCode == RESULT_OK && requestCode == 4) {
-            if (data.getExtras() != null) {
+            if (data.getExtras() == null) {
                     int index = data.getExtras().getInt("position");
                     subList.deleteSub(index);
                     subListAdapter.notifyDataSetChanged();
                     saveInFile();
                 }
+            else {}
             }
         }
     }
