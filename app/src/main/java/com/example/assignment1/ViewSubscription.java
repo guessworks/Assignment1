@@ -31,8 +31,16 @@ import android.widget.TextView;
  */
 public class ViewSubscription extends AppCompatActivity {
 
-    private boolean delete = false;
+    private int delete = 0;
     private Context context = this;
+    private Intent editedSub;
+    private Subscription sub;
+    private int position;
+    TextView subName;
+    TextView subDate;
+    TextView subCharge;
+    TextView subComment;
+
     /**
      * Called upon creation of the activity. Displays the subscription data
      * passed to it.
@@ -44,26 +52,27 @@ public class ViewSubscription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_subscription);
 
+        position = getIntent().getIntExtra("position", 0);
+
         /* Set data to TextView objects */
+        subName = (TextView) findViewById(R.id.viewSubName);
         String name = getIntent().getStringExtra("name");
-        TextView subName = (TextView) findViewById(R.id.viewSubName);
         subName.setText(name);
 
         String date = getIntent().getStringExtra("date");
-        TextView subDate = (TextView) findViewById(R.id.viewSubDate);
+        subDate = (TextView) findViewById(R.id.viewSubDate);
         subDate.setText(date);
 
         String charge = getIntent().getStringExtra("charge");
-        TextView subCharge = (TextView) findViewById(R.id.viewSubCharge);
+        subCharge = (TextView) findViewById(R.id.viewSubCharge);
         subCharge.setText(charge);
 
         String comment = getIntent().getStringExtra("comment");
-        TextView subComment = (TextView) findViewById(R.id.viewSubComment);
-        subCharge.setText(comment);
+        subComment = (TextView) findViewById(R.id.viewSubComment);
+        subComment.setText(comment);
 
 
         /* Called when the 'Edit' button is clicked */
-        /*
         View.OnClickListener editSubListener = new View.OnClickListener() {
             public void onClick(View view) {
                 Intent editSub = new Intent(context , EditSubscription.class);
@@ -73,12 +82,12 @@ public class ViewSubscription extends AppCompatActivity {
         };
         Button editButton = (Button) findViewById(R.id.editSubButton);
         editButton.setOnClickListener(editSubListener);
-        */
+
 
         /* Called when the 'Delete' button is clicked */
         View.OnClickListener deleteSubListener = new View.OnClickListener() {
             public void onClick(View view) {
-                delete = true;
+                delete = 1;
                 finish();
             }
         };
@@ -86,18 +95,54 @@ public class ViewSubscription extends AppCompatActivity {
         deleteButton.setOnClickListener(deleteSubListener);
     }
 
+    /**
+     * Called when the ViewSubscription activity is ended.
+     */
     @Override
     public void finish() {
-        if (!delete){
-            //implement editing exit
+        if (delete == 0){
+            /* User edited the subscription */
+            if (sub != null) {
+                Intent returnData = new Intent();
+                returnData.putExtra("delete", 0);
+                returnData.putExtra("position", position);
+                returnData.putExtra("editedSub", sub);
+                setResult(RESULT_OK, returnData);
+            }
             super.finish();
         }
         else {
             /* User is deleting the subscription */
             Intent returnData = new Intent();
-            returnData.putExtra("delete", true);
+            returnData.putExtra("delete", 1);
+            returnData.putExtra("position", position);
             setResult(RESULT_OK, returnData);
             super.finish();
         }
+    }
+
+    /**
+     * Dictates what is done with the result of the EditSubscription sub-activity.
+     *
+     * @param resultCode -1 if the activity exited without errors and without being cancelled.
+     * @param requestCode An integer which identifies the sub-activity being terminated.
+     * @param data The sub-activity's return data.
+     */
+    public void onActivityResult(int resultCode, int requestCode, Intent data){
+        if ((requestCode == 6) && (resultCode == RESULT_OK)){
+            if (data.getExtras() != null) {
+                sub = (Subscription) data.getExtras().get("editSub");
+                /* Update the values displayed in TextView */
+                subName.clearComposingText();
+                subName.setText(sub.getName());
+                subDate.clearComposingText();
+                subDate.setText(sub.getDate());
+                subCharge.clearComposingText();
+                subCharge.setText(sub.getCharge().toString());
+                subComment.clearComposingText();
+                subComment.setText(sub.getComment());
+            }
+        }
+        else {}
     }
 }

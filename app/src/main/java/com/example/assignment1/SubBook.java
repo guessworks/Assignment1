@@ -43,7 +43,7 @@ import com.google.gson.reflect.TypeToken;
  */
 public class SubBook extends AppCompatActivity {
 
-    public SubList subList= new SubList();
+    public SubList subList = new SubList();
     ListView listView;
     SubListAdapter subListAdapter;
     private Context context = this;
@@ -68,7 +68,7 @@ public class SubBook extends AppCompatActivity {
         /* Called when the 'New Subscription' button is clicked */
         View.OnClickListener newSubListener = new View.OnClickListener() {
             public void onClick(View view) {
-                Intent newSub = new Intent(context , NewSubscription.class);
+                Intent newSub = new Intent(context, NewSubscription.class);
                 startActivityForResult(newSub, 5);
                 onActivityResult(5, RESULT_OK, newSub);
             }
@@ -160,7 +160,8 @@ public class SubBook extends AppCompatActivity {
 
             Gson gson = new Gson();
 
-            Type listType = new TypeToken<SubList>(){}.getType();
+            Type listType = new TypeToken<SubList>() {
+            }.getType();
 
             subList = gson.fromJson(input, listType);
 
@@ -179,9 +180,9 @@ public class SubBook extends AppCompatActivity {
      * Processes the data sent by the completed NewSubscription activity.
      *
      * @param requestCode An int value which represents the subactivity.
-     * @param resultCode An int value that depends on the termination status of
-     *                   the subactivity.
-     * @param data An intent object containing data passed from the subactivity.
+     * @param resultCode  An int value that depends on the termination status of
+     *                    the subactivity.
+     * @param data        An intent object containing data passed from the subactivity.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -192,16 +193,27 @@ public class SubBook extends AppCompatActivity {
                 subListAdapter.notifyDataSetChanged();
                 saveInFile();
             }
-        }
-        else if (resultCode == RESULT_OK && requestCode == 4) {
-            if (data.getExtras() == null) {
-                    int index = data.getExtras().getInt("position");
-                    subList.deleteSub(index);
-                    subListAdapter.notifyDataSetChanged();
-                    saveInFile();
+        } else if (resultCode == RESULT_OK && requestCode == 4) {
+            if (data != null) {
+                if (data.getExtras() != null) {
+                    /* delete subscription */
+                    if (data.getExtras().getInt("delete") == 1) {
+                        int index = data.getExtras().getInt("position");
+                        subList.deleteSub(index);
+                        subListAdapter.notifyDataSetChanged();
+                        saveInFile();
+                    } else if (data.getExtras().get("editedSub") != null) {
+                        /* update subscription */
+                        int index = data.getExtras().getInt("position");
+                        Subscription editedSub = (Subscription) data.getExtras().get("editedSub");
+                        subList.editSub(index, editedSub);
+                        subListAdapter.notifyDataSetChanged();
+                        saveInFile();
+                    }
+                } else {
                 }
-            else {}
             }
         }
     }
+}
 

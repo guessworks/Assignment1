@@ -116,16 +116,13 @@ public class SubList {
      * Sets a subscription's attributes to new values.
      *
      * @param index The subscription's position in SubList.
-     * @param charge The subscription's new monthly charge.
-     * @param date The subscription's new start date.
-     * @param name The subscription's new name.
-     * @param comment The subscription's new comment.
+     * @param editedSub A subscription object containing the new values.
      */
-    public void editSub(int index, Double charge, String date, String name, String comment){
-        subListObj.get(index).setCharge(charge);
-        subListObj.get(index).setDate(date);
-        subListObj.get(index).setName(name);
-        subListObj.get(index).setComment(comment);
+    public void editSub(int index, Subscription editedSub){
+        subListObj.get(index).setCharge(editedSub.getCharge());
+        subListObj.get(index).setDate(editedSub.getDate());
+        subListObj.get(index).setName(editedSub.getName());
+        subListObj.get(index).setComment(editedSub.getComment());
     }
 
     /**

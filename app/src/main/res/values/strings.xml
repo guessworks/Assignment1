@@ -17,4 +17,5 @@
     <string name="DeleteSubButton">Delete</string>
     <string name="MonthlyCharge">Monthly charge:</string>
     <string name="Date">Date started:</string>
+    <string name="EditSubTitle">Edit Subscription</string>
 </resources>

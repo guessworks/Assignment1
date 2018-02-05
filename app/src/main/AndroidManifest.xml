@@ -16,8 +16,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewSubscription" />
-        <activity android:name=".ViewSubscription"></activity>
+        <activity
+            android:name=".NewSubscription"
+            android:parentActivityName=".SubBook">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SubBook" />
+        </activity>
+        <activity
+            android:name=".ViewSubscription"
+            android:parentActivityName=".SubBook">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SubBook" />
+        </activity>
+        <activity android:name=".EditSubscription"></activity>
     </application>
 
 </manifest>
